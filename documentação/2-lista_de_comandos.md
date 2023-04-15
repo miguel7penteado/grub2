@@ -302,17 +302,76 @@ Imprimir informações USB
 concatena argumentos com um único espaço como delimitador e executa o resultado como uma sequência de comandos do GRUB.
 
 `exit`
-
+Sair do GRUB
 
 `export VARIABLE[=VALUE] …`
+Defina a variável como uma variável de ambiente global
+
 `expr [OPTIONS] EXPRESSION`
+​ Calcular expressões matemáticas, suporte + - * \ % operadores
+
+Aviso : Dividir por zero pode causar condições inesperadas, como congelamentos ou reinicializações
+
+--set=VARIÁVEL, -s salva o resultado na variável
+
 `fakebios`
+​ Crie uma estrutura do tipo Legacy-BIOS para compatibilidade com sistemas existentes
+
 `false`
+retorna falso
+
 `file OPTIONS FILE`
+Detectar tipo de arquivo
+
+--is-i386-xen-pae-domu
+--is-x86_64-xen-domu
+--is-x86-xen-dom0
+--is-x86-multiboot
+--is-x86-multiboot2
+--is-arm-linux
+--is-arm64-linux
+--is-ia64-linux
+--is-mips-linux
+--is-mipsel-linux
+--is-sparc64-linux
+--is-powerpc-linux
+--is-x86-linux
+--is-x86-linux32
+--is-x86-kfreebsd
+--is-i386-kfreebsd
+--is-x86_64-kfreebsd
+--is-x86-knetbsd
+--is-i386-knetbsd
+--is-x86_64-knetbsd
+--is-i386-efi
+--is-x86_64-efi
+--is-ia64-efi
+--is-arm64-efi
+--is-arm-efi
+--is-riscv32-efi
+--is-riscv64-efi
+--is-hibernate-hiberfil
+--is-x86_64-xnu
+--is-i386-xnu
+--is-xnu-hibr
+--is-x86-bios-bootsector
+
 `fixmmap`
+Corrija o erro "BlInitializeLibrary failed 0xc000009a" ao iniciar o Windows em alguns computadores
+
 `fix_video`
+Corrigir problemas de exibição de imagem
+
 `fucksb [OPTIONS]`
+Ocultar o estado de inicialização segura do firmware durante a fase do carregador de inicialização. Se não houver parâmetro, retorna se habilita esta função, e retorna 1 se habilitada.
+
+--install, -i habilita o mascaramento
+--on, -y disfarça o estado de inicialização segura como on
+--off, -n disfarça o estado de inicialização segura como desativado
+
 `fwsetup`
+
+
 `getargs OPTIONS STRING VARIABLE`
 `getenv [OPTIONS] EFI_ENV VARIABLE`
 `getkey [-n] [VARIABLE]`
