@@ -1,0 +1,432 @@
+# Lista de Comandos
+
+`acpi [OPÇÕES] ARQUIVO1 [ARQUIVO2 ...]`
+
+## Carregar tabela ACPI
+
+Os sistemas BIOS modernos geralmente implementam ACPI e definem várias tabelas para descrever a interface entre um sistema operacional e firmware compatível com ACPI. Em alguns casos, as tabelas fornecidas por padrão estão disponíveis apenas em determinados sistemas operacionais, podendo ser necessário substituir algumas delas.
+
+Normalmente, esse comando substituirá o ponteiro de descrição do sistema raiz (RSDP) na área de dados estendida do BIOS para apontar para a nova tabela. Se a opção --no-ebda for usada, apenas o GRUB obtém a nova tabela, mas a emulação EFI do GRUB pode usar a nova tabela.
+
+```bash
+# não carrega a lista
+--exclude=TABLE1,TABLE2,…, -x 
+
+#lista de carregamento
+--load-only=TABLE1,TABLE2,…, -n 
+
+# Importar tabelas da versão 1 para o sistema operacional
+--v1, -1 
+
+# Importar as tabelas das versões 2 e 3 para o sistema operacional
+--v2, -2 
+
+# definir OEMID para RSDP, XSDT e RSDT
+--oemid=STRING, -o 
+
+# set OEMTABLE ID para RSDP, XSDT e RSDT
+--oemtable=STRING, -t 
+
+# define a versão OEMTABLE de RSDP, XSDT e RSDT
+--oemtablerev=n, -r 
+
+# Define o criador OEMTABLE para RSDP, XSDT e RSDT.
+--oemtablecreator=STRING, -c 
+
+# Define a versão do criador OEMTABLE para RSDP, XSDT e RSDT.
+--oemtablecreatorrev=n, -d 
+
+# Não atualiza o EBDA. Pode evitar pânico parcial do BIOS, não tem efeito no sistema operacional que não pode receber RSDP do GRUB.
+--no-ebda, -e 
+
+# Carrega como SLIC, modifica automaticamente OEMID e OEMTABLE ID.
+--slic, -s 
+
+# mostra/carrega tabelas MSDM
+--msdm 
+
+# usa arquivo BMP como logotipo de inicialização
+--bgrt 
+```
+
+`alias NOME COMANDO [RESUMO]`
+define um apelido
+
+`appleloader cmdline`
+Carregador de boot herdado da Apple.
+
+`authenticate [userlist]`
+​ Verifique se o usuário está na lista de usuários ou listado no valor da variável "superusuários"
+
+​ Este comando retorna verdadeiro se "superusuário" estiver vazio.
+
+`background_color COLOR`
+​ Defina a cor de fundo do terminal ativo
+
+A cor de fundo só pode ser alterada ao usar "gfxterm". Este comando define a cor da área em branco sem texto, a cor de fundo do texto é controlada pelas variáveis ​​de ambiente color_normal, color_highlight, menu_color_normal, menu_color_highlight.
+
+`background_image [OPTIONS] [FILE]`
+​ Defina a imagem de fundo para o terminal ativo
+
+Por padrão, a imagem será esticada para preencher a tela inteira (--mode=stretch)
+
+​ Se não houver nenhum parâmetro, exclua a imagem de fundo atualmente carregada.
+
+--mode=stretch/normal, -m define o modo de imagem de fundo para esticar ou normal
+
+`backtrace`
+Imprimir informações de rastreamento
+
+`badram ADDR1,MASK1[,ADDR2,MASK2[,…]]`
+Mascarar memória errada
+
+Este comando informa ao gerenciador de memória que a região especificada da RAM deve ser filtrada. Contanto que o kernel carregado obtenha seu mapa de memória do GRUB, ele ainda funcionará depois que o kernel for carregado. Os kernels que suportam esse recurso geralmente incluem Linux, GNU Mach, kernels FreeBSD e kernels de inicialização múltipla.
+
+A sintaxe é a mesma fornecida pelo Memtest86+: uma lista de pares endereço/máscara. Dado um endereço alinhado à página e um par endereço base/máscara, se todos os bits do endereço alinhado à página ativado pela máscara corresponderem ao endereço base, isso significa que a página será filtrada.
+
+`blocklist [OPTIONS] FILE`
+
+Imprimir lista de bloqueio de arquivo
+
+--set=VAR, -s salva na variável
+--disk, -d calcula setores iniciais com base em discos em vez de partições
+
+`blscfg FILE`
+​ Importar configuração BootLoaderSpec (BLS)
+
+`bls_import FILE`
+O mesmo que "blscfg"
+
+`boot`
+​ Inicie o sistema operacional carregado
+
+`btrfs-info DEVICE`
+Exiba as informações da partição btrfs do dispositivo
+
+`btrfs-mount-subvol DEVICE DIRECTORY SUBVOL`
+Defina o diretório DIRECTORY do dispositivo btrfs como o ponto de montagem do subvolume SUBVOL
+
+`btrfs-list-subvols [OPTIONS] DEVICE`
+​ Exibir todos os subvolumes no dispositivo DEVICE
+
+--output=VARIÁVEL, -o salva saída como variável
+--path-only, -p mostra apenas caminhos para subvolumes
+--id-only, -i mostra apenas IDs de subvolume
+
+`btrfs-get-default-subvol [OPTIONS] DEVICE`
+Exiba o subvolume padrão no dispositivo DEVICE
+
+Os parâmetros são os mesmos que btrfs-list-subvols
+
+`cat [OPTIONS] FILE`
+Exibe o conteúdo do arquivo de texto
+
+--dos permite quebras de linha no formato DOS (CR-LF)
+--set=VARIÁVEL, -s salva o conteúdo na variável
+
+`chainloader [–force|–bpb] FILE [ADDR]`
+Inicie outro bootloader, o endereço de carregamento padrão é 0x7c00
+
+`chainloader [OPTIONS] FILE CMDLINE`
+Inicie o executável EFI
+
+AVISO : Usar este comando pode causar problemas de segurança
+
+--alt, -a usa o carregador EFI integrado do GRUB 2
+--text, -t muda para o modo de texto antes de iniciar o EFI
+--boot, -b executa a inicialização imediatamente
+
+`checktime minute hour day month day_of_week`
+ Verifique se a hora atual atende aos requisitos, se sim, retorne 0, caso contrário, retorne 1. A sintaxe é semelhante ao cron no unix.
+ 
+ | símbolo | significado                                    | exemplo  |
+|:-------:|------------------------------------------------|----------|
+|    \*   | Qualquer valor (observe o escape do asterisco) | \*       |
+|    ,    | listar vários valores                          | 10,20,30 |
+|    -    | valor do intervalo                             | 5-45     |
+|    /    | valor do passo                                 | 5/10     |
+
+`clear`
+Limpa a tela
+
+Nota: Antes de usar este comando, você precisaunset debug
+
+`clear_menu`
+Limpar o menu atual
+
+Aviso : certifique-se de desativar o ESC antes de usar este comandoexport grub_disable_esc=1
+
+`cmosclean byte:bit`
+Limpe o valor do bit CMOS localizado em byte:bit
+
+Disponível apenas em plataformas que suportam CMOS.
+
+`cmosdump`
+Exibir dados brutos CMOS
+
+`cmostest byte:bit`
+Teste o valor do CMOS em byte:bit
+
+Retorna verdadeiro (0) se o bit estiver definido, diferente de zero caso contrário.
+
+`cmp FILE1 FILE2`
+Comparar dois arquivos
+
+​ Se os tamanhos dos dois arquivos forem diferentes, os tamanhos serão exibidos separadamente. Se o tamanho for o mesmo, mas os dados forem diferentes, exiba a primeira posição e os dados diferentes. Se forem idênticos, não há saída. Um valor de retorno de 0 significa que os arquivos são iguais, caso contrário, os arquivos são diferentes.
+
+--quiet, -q não exibe informações
+
+
+`commandline`
+Digite a linha de comando do GRUB
+
+`configfile FILE`
+Carregar o arquivo de configuração do GRUB2
+
+`crc32 FILE [VARIABLE]`
+​ Calcule o código de verificação CRC32 do arquivo
+
+`cpuid [OPTIONS] | EAX EAX_VAR EBX_VAR ECX_VAR EDX_VAR`
+Detectar características da CPU
+
+​ Se nenhum parâmetro for adicionado, o parâmetro padrão é -l. Retorna 0 se a CPU suportar esse recurso.
+
+--set=VARIÁVEL, -s salva o resultado do teste na variável
+--long-mode, -l Verifica se a CPU suporta o modo longo de 64 bits
+--pae, -p Verifica se a CPU suporta extensão de endereço físico (PAE)
+--vendor, -v obtém o ID do fornecedor da CPU
+--vme detecta se a CPU suporta extensões 8086 virtuais
+--pse detecta se a CPU suporta extensão de tamanho de página
+--tsc Verifica se a CPU suporta TSC
+--msr Verifica se a CPU suporta MSR
+--mtrr Verifica se a CPU suporta MTRR
+--mmx Verifica se a CPU suporta MMX
+--sse Verifica se a CPU suporta SSE
+--sse2 Verifique se a CPU suporta SSE2
+--sse3 Verifica se a CPU suporta SSE3
+--vmx detecta se a CPU oferece suporte a extensões de máquina virtual
+--vmsign obtém a assinatura da máquina virtual
+--hypervisor verifica se a máquina virtual existe
+--dts Verifica se a CPU suporta DTS
+--emax, -e Obtém o valor máximo de entrada da função estendida que o CPUID pode aceitar
+--brand, -b obtém o nome da CPU
+
+`cputemp [VARIABLE]`
+Leia a temperatura da CPU (suporta apenas algumas CPUs Intel)
+
+`cryptomount DEVICE | -u UUID | -a | -b`
+Monte o dispositivo criptografado (suporte LUKS/geli), em alguns casos é necessário inserir a senha interativamente
+
+--uuid, -u monta dispositivo por UUID
+--all, -a monta todos os dispositivos
+--boot, -b monta todos os dispositivos marcados com "boot"
+
+`cutmem FROM[K|M|G] TO[K|M|G]`
+Exclua todas as regiões de memória dentro do intervalo especificado
+
+
+`date [OPTIONS] [[year-]month-day] [hour:minute[:second]]`
+​ Exibir/ajustar a hora atual
+
+--set=VARIÁVEL, -s economiza tempo para a variável
+--human, -h Salvar na variável no formato Kedu
+
+`decrement VARIABLE`
+Diminuir o valor de uma variável em um
+
+`devicetree FILE`
+Carregar blob da árvore de dispositivos (.dtb)
+
+`dd OPTIONS`
+Escreva um arquivo/string/número hexadecimal em um arquivo
+
+AVISO : O USO DESTE COMANDO PODE CAUSAR PERDA DE DADOS
+
+--if=FILE, -i especifica o arquivo de entrada
+--str=STRING, -s especifica a string de entrada
+--hex=HEX, -h especifica o número hexadecimal de entrada
+--of=FILE, -o especifica o arquivo de saída
+--bs=BYTES, -b especifica o tamanho do bloco
+--count=n, -c especifica o número de blocos
+--skip=n pula os primeiros n blocos de entrada
+--seek=n pula os primeiros n blocos de saída
+
+`distrust PUBKEY_ID`
+ Remova PUBKEY_ID da lista de confiança
+
+`dp FILE/DEVICE`
+Dispositivo UEFI Caminho do dispositivo ou arquivo de saída
+
+`drivemap [OPTIONS] FROM_DEVICE TO_DEVICE`
+Troque a ordem do disco do BIOS
+
+--list, -l lista os mapeamentos de disco atuais
+--reset, -r redefine todos os mapeamentos para os padrões
+--swap, -s executa o mapeamento do disco
+
+`dump ADDR [SIZE]`
+Exibe o conteúdo da memória
+
+`echo [OPTIONS] STRING …`
+seqüência de exibição
+
+​ Se a opção -n não for adicionada, ela será agrupada automaticamente. Os escapes de barra invertida suportam as seguintes sequências:
+
+​ \\ – barra invertida \a – alarme (BEL) \c – suprime nova linha à direita \f – alimentação de formulário
+
+​ \n – nova linha\r – retorno de carro\t – tabulação horizontal \v – tabulação vertical
+
+​ \e0xBF -- define a cor do caractere
+
+-n não envolve automaticamente
+-e ativa a análise de escape de barra invertida
+
+`efi-export-env VARIABLE`
+Salve a variável GRUB na variável de ambiente EFI GRUB_ENV
+
+AVISO : O uso deste comando modifica as variáveis ​​de ambiente UEFI
+
+`efi-load-env`
+Leia as variáveis ​​da variável de ambiente EFI GRUB_ENV
+
+`efiload [OPTIONS] FILE`
+Carregar driver UEFI
+
+--nc, -n apenas carrega o driver, não vincula
+
+
+`efiusb DEVICE`
+Imprimir informações USB
+
+`eval STRING …`
+concatena argumentos com um único espaço como delimitador e executa o resultado como uma sequência de comandos do GRUB.
+
+`exit`
+
+
+`export VARIABLE[=VALUE] …`
+`expr [OPTIONS] EXPRESSION`
+`fakebios`
+`false`
+`file OPTIONS FILE`
+`fixmmap`
+`fix_video`
+`fucksb [OPTIONS]`
+`fwsetup`
+`getargs OPTIONS STRING VARIABLE`
+`getenv [OPTIONS] EFI_ENV VARIABLE`
+`getkey [-n] [VARIABLE]`
+`gettext STRING`
+`gptprio.next OPTIONS [DEVICE]`
+`gptrepair DEVICE`
+`gptsync DEVICE [PARTITION[+/-[TYPE]]] …`
+`halt [–no-apm]`
+`hashsum -h HASH [OPTIONS] [-c FILE [-p PREFIX]] [FILE1 [FILE2 …]]`
+`hdparm [OPTIONS] DISK`
+`help [PATTERN …]`
+`hexdump [OPTIONS] FILE/DEVICE [VARIABLE]`
+`hiddenentry “TITLE” [OPTIONS] [arg …] { COMMAND; … }`
+`inb [OPTIONS] PORT`
+`increment VARIABLE`
+`ini_get [OPTIONS] FILE [SECTION:]KEY`
+`initrd FILE …`
+`initrd16 FILE …`
+`initrdefi FILE`
+`inl [OPTIONS] PORT`
+`insmod MODULE`
+`inw [OPTIONS] PORT`
+`isotools OPTIONS FILE [VARIABLE]`
+`keymap FILE`
+`keystatus [OPTIONS]`
+`kfreebsd [OPTIONS] FILE [CMDLINE]`
+`kfreebsd_loadenv FILE`
+`kfreebsd_module FILE [CMDLINE]`
+`kfreebsd_module_elf FILE [CMDLINE]`
+`knetbsd [OPTIONS] FILE [CMDLINE]`
+`knetbsd_module FILE [CMDLINE]`
+`knetbsd_module_elf FILE [CMDLINE]`
+`kopenbsd [OPTIONS] FILE [CMDLINE]`
+`kopenbsd_ramdisk FILE`
+`linuxefi FILE [CMDLINE]`
+`list_env [OPTIONS]`
+`list_trusted`
+`load_env [OPTIONS] [VARIABLE …]`
+`loadbios BIOS_DUMP [INT10_DUMP]`
+`loadfile [OPTIONS] FILE`
+`loopback [OPTIONS] DEVICE FILE`
+`ls [OPTIONS] [FILE …]`
+`lsacpi [OPTIONS]`
+`lspci [OPTIONS]`
+`lsefi`
+`lsefienv`
+`lsefimmap`
+`lsefisystab`
+`lua [OPTIONS] [FILE]`
+`map [OPTIONS] FILE [DEVICE]`
+`md5sum arg …`
+`menuentry “TITLE” [OPTIONS] [arg …] { COMMAND; … }`
+`nes FILE [PIXEL_SIZE WAIT_KEY_TIME]`
+`normal [FILE]`
+`normal_exit`
+`ntboot [OPTIONS] FILE`
+`nthibr FILE`
+`ntversion (hdx,y) VARIABLE`
+`outb PORT VALUE [MASK]`
+`outl PORT VALUE [MASK]`
+`outw PORT VALUE [MASK]`
+`partnew OPTIONS DISK PARTNUM`
+`parttool PARTITION COMMANDS`
+`password USER clear-password`
+`password_pbkdf2 USER hashed-password`
+`pcidump OPTIONS`
+`play FILE | TEMPO [PITCH1 DURATION1] [PITCH2 DURATION2] …`
+`pop_env VARIABLE …`
+`probe OPTIONS DEVICE`
+`rand [OPTIONS] VARIABLE`
+`rdmsr [OPTIONS] ADDR`
+`read [VARIABLE] [hide | asterisk]`
+`read_byte [OPTIONS] ADDR`
+`read_dword [OPTIONS] ADDR`
+`read_file FILE VARIABLE …`
+`read_word [OPTIONS] ADDR`
+`reboot`
+`regexp [OPTIONS] ‘REGEXP’ “STRING”`
+`reset [OPTIONS]`
+`save_env [OPTIONS] VARIABLE …`
+`sbpolicy [OPTIONS]`
+`search OPTIONS STRING`
+`serial [OPTIONS]`
+`setenv [OPTIONS] EFI_ENV VALUE`
+`setkey OPTIONS NEW_KEY USA_KEY`
+`setpci [OPTIONS] REGISTER[=VALUE[:MASK]]`
+`setup_var offset [setval]`
+`sha1sum arg …`
+`sha256sum arg …`
+`sha512sum arg …`
+`shell [OPTIONS] CMDLINE`
+`sleep [OPTIONS] n`
+`smbios [OPTIONS]`
+`stat [OPTIONS] FILE`
+`strconv [OPTIONS] STRING`
+`submenu “TITLE” [OPTIONS] { MENU … }`
+`submenu_exit`
+`terminfo [OPTIONS] [TERM]`
+`test EXPRESSION`
+`testspeed [OPTIONS] FILE`
+`tetris`
+`tr [OPTIONS] [SET1] [SET2] [STRING]`
+`true`
+`trust [OPTIONS] PUBKEY_FILE`
+`unalias NAME`
+`uuid4 VARIABLE`
+`vboot harddisk=FILE floppy=FILE cdrom=FILE boot=harddisk/floppy/cdrom`
+`vbootinsmod FILE`
+`verify_detached [OPTIONS] FILE SIGNATURE_FILE [PUBKEY_FILE]`
+`version`
+`videoinfo [WxH[xD]]`
+`vbeinfo [WxH[xD]]`
+`videomode [OPTIONS] VARIABLE`
+`wimboot [OPTIONS] @:NAME:FILE`
+`wimtools OPTIONS FILE [WIN32_PATH]`
+`write_bytes ADDR VALUE …`
+
