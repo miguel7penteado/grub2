@@ -1,0 +1,237 @@
+# Temas do Grub
+
+
+### TEMA
+
+NOTA: O tema entra em conflito com a funcionalidade de progresso de leitura de arquivo. Se você tiver problemas para exibir imagens, desative a exibição de progresso.
+
+```grub
+export enable_progress_indicator=0
+```
+
+
+### Fonte
+GRUB suporta o formato de fonte PFF2. As fontes disponíveis podem ser listadas com lsfontso comando e loadfontscarregadas com o comando.
+
+### Foto
+O GRUB suporta imagens nos formatos bmp, jpg, jpeg, png, tga.
+
+
+# Cor
+As cores nos seguintes formatos são suportadas:
+
+```grub
+#RRGGBB (número hexadecimal, por exemplo, "#8899FF")
+#RGB (idem)
+R,G,B (números decimais, como "128.128.255")
+letras minúsculas "nomes de cores SVG 1.0"
+```
+
+### Coordenada
+Posições de coordenadas nos seguintes formatos são suportadas:
+
+```grub
+x (em pixels)
+p% (em porcentagem do contêiner)
+p%+x, p%-x (uma mistura dos anteriores)
+```
+
+### Atributos Globais
+As propriedades globais são especificadas no seguinte formato:
+
+```grub
+nome1: valor1
+name2: "valor que pode conter espaços"
+nome3: #88F
+nome4: p%+x
+```
+
+#### Lista de atributos globais
+
+| title-text                 | Especifica o texto do título.                                                                                                                                        |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| title-font                 | Especifica a fonte do título.                                                                                                                                        |
+| title-color                | Especifica a cor do texto do título.                                                                                                                                 |
+| desktop-image              | Especifica a imagem de fundo da área de trabalho.                                                                                                                    |
+| desktop-image-scale-method | Especifica o modo de dimensionamento da imagem de plano de fundo da área de trabalho. Os valores possíveis são "stretch", "crop", "padding", "fitwidth", "fiheight". |
+| desktop-image-h-align      | Especifica o modo de alinhamento horizontal da imagem de fundo da área de trabalho. Os valores possíveis são "esquerda", "centro", "direita".                        |
+| desktop-image-v-align      | Especifica o modo de alinhamento vertical para a imagem de fundo da área de trabalho. Os valores possíveis são "top", "center", "bottom".                            |
+| desktop-color              | Especifica a cor de fundo da área de trabalho.                                                                                                                       |
+| terminal-box               | Especifica a imagem de estilo da janela do terminal de linha de comando, como "terminal_*.png".                                                                      |
+| terminal-border            | Especifica a largura da borda da janela do terminal de linha de comando.                                                                                             |
+| terminal-left              | Especifica as coordenadas à esquerda da janela do terminal de linha de comando.                                                                                      |
+| terminal-top               | Especifica as coordenadas superiores da janela do terminal de linha de comando.                                                                                      |
+| terminal-width             | Especifica a largura da janela do terminal de linha de comando.                                                                                                      |
+| terminal-height            | Especifica a altura da janela do terminal de linha de comando.                                                                                                       |
+
+
+### Componentes do Tema
+
+Crie componentes em seu tema precedendo o tipo de componente com um sinal "+":
+
+```grub
++ label {
+    text = "GNU GRUB 2"
+    font = "Dos VGA"
+    color = "#8FF"
+    align = center
+    preferred_size = (120, 80)
+}
+```
+
+
+`label`
+Este componente exibe uma linha de texto.
+
+Estes são os atributos de label:
+
+| Opção   | Descrição                                                                                                                                                                                                                                                      |
+|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id      | Se for "__timeout__" e não houver atributo "text", ele exibirá a contagem regressiva inicial. Se "__help__" e nenhum atributo "text", exibe o texto de ajuda do menu selecionado. Se "__title__" e nenhum atributo "text", exibe o título do menu selecionado. |
+| text    | O texto a ser exibido. Se o texto começar com "@@", será exibido como o valor da variável, por exemplo, definido como "@@grub_cpu" para exibir o valor grub_cpuda .                                                                                            |
+| var     | O nome da variável a ser exibido. Ao contrário da propriedade "text", o valor da variável é atualizado a cada segundo.                                                                                                                                         |
+| hook    | Usado com o atributo "var" para atualizar o valor de uma variável executando um comando simples.                                                                                                                                                               |
+| font    | A fonte do texto.                                                                                                                                                                                                                                              |
+| color   | A cor do texto.                                                                                                                                                                                                                                                |
+| align   | O alinhamento horizontal do texto no componente, as opções são "left", "center" e "right".                                                                                                                                                                     |
+| visible | Defina como "falso" para ocultar este componente.                                                                                                                                                                                                              |
+
+
+`image`
+Este componente exibe uma imagem.
+
+Estes são os atributos de imagem:
+
+| Atributo | Descrição:                        |
+|----------|-----------------------------------|
+| file     | O caminho completo para a imagem. |
+
+
+`progress_bar`
+Exibe uma barra de progresso de contagem regressiva horizontal.
+
+Estes são os atributos de progress_bar:
+
+| Atributo          | Descrição:                                                                                                                                                                                                               |
+|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                | Defina como "__timeout__" para exibir uma contagem regressiva.                                                                                                                                                           |
+| fg_color          | Defina a cor do primeiro plano.                                                                                                                                                                                          |
+| bg_color          | Defina a cor de fundo.                                                                                                                                                                                                   |
+| border_color      | Defina a cor da borda.                                                                                                                                                                                                   |
+| text_color        | Defina a cor do texto.                                                                                                                                                                                                   |
+| bar_style         | Defina a imagem do estilo da barra de progresso, por exemplo, "progress_frame_*.png".                                                                                                                                    |
+| highlight_style   | Defina a imagem de estilo da área destacada da barra de progresso, como "progress_hl_*.png".                                                                                                                             |
+| highlight_overlay | Se definido como "true", a imagem da borda realçada cobrirá a imagem da borda do quadro da barra de progresso. O padrão é "falso".                                                                                       |
+| font              | Defina a fonte.                                                                                                                                                                                                          |
+| text              | Define o texto exibido na barra de progresso. Se o valor for "@TIMEOUT_NOTIFICATION_SHORT@", "@TIMEOUT_NOTIFICATION_MIDDLE@" ou "@TIMEOUT_NOTIFICATION_LONG@", o GRUB atualizará automaticamente as informações da dica. |
+
+`circular_progress`
+Exibe um indicador circular de contagem regressiva. A aparência é determinada pela imagem central e pela imagem em escala. A imagem central é posicionada no centro do componente. Ao redor da circunferência, desenhe várias imagens de carrapatos.
+
+Estes são os atributos de circular_progress:
+
+| Parâmetro       | Descrição:                                                                                                               |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------|
+| id              | Defina como "__timeout__" para exibir uma contagem regressiva.                                                           |
+| center_bitmap   | Defina o nome do arquivo da imagem central.                                                                              |
+| tick_bitmap     | Defina o nome do arquivo da imagem do tick.                                                                              |
+| num_ticks       | Define o número de pontos na circunferência.                                                                             |
+| ticks_disappear | Defina se a escala desaparece quando o progresso é alcançado, a opção é "verdadeiro" ou "falso" (padrão).                |
+| start_angle     | Defina a posição da primeira marca em 1/256 do círculo. Use "xxx deg" ou "xxx \xc2\xb0" para definir a posição em graus. |
+
+
+
+
+`boot_menu`
+Exiba o menu de inicialização do GRUB.
+
+| Parâmetro                  | Descrição:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| item_font                  | Fonte para títulos de itens de menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| selected_item_font         | Fonte verificada para títulos de itens de menu. O valor padrão é "herdar", que herda a fonte item_font definida                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| item_color                 | A cor do título do item de menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| selected_item_color        | A cor do título do item de menu marcado. O valor padrão é "herdar", que herda a cor item_color definida por .                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| icon_width                 | A largura do ícone do item de menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| icon_height                | A altura do ícone do item de menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| item_height                | A altura do item de menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| item_padding               | Espaço para reservar em cada lado do conteúdo do item de menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| item_icon_space            | Espaço entre o ícone do item de menu e o título.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| item_spacing               | O espaço reservado entre os itens do menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| menu_pixmap_style          | A imagem de estilo da caixa do menu de inicialização, como "menu_*.png".                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| item_pixmap_style          | A imagem de estilo para a caixa de item de menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| selected_item_pixmap_style | Imagem estilizada para a caixa do item de menu marcado.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| scrollbar                  | Seja para exibir a barra de rolagem, a opção é "true" ou "false".                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| scrollbar_frame            | Imagem estilo barra de rolagem, como "scrollbar_*.png".                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| scrollbar_thumb            | A imagem de estilo da miniatura da barra de rolagem, como "scrollbar_thumb_*.png".                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| scrollbar_thumb_overlay    | As opções são "true" ou "false". Se for "true", a lateral do controle deslizante cobrirá a lateral do quadro da barra de rolagem.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| scrollbar_slice            | A posição da barra de rolagem no quadro do menu, as opções são "oeste", "centro", "leste" (padrão). "oeste" será desenhado à esquerda (alinhado à direita) e "leste" será desenhado à direita (alinhado à esquerda). "center" irá desenhar no centro. Observação: Se "centro", se uma barra de rolagem for desenhada, a largura do item do menu de inicialização será reduzida pela largura da barra de rolagem e a barra de rolagem será desenhada à direita da imagem central. Se nenhuma barra de rolagem for desenhada, a largura do item de menu será a largura da imagem central. |
+| scrollbar_left_pad         | O espaço à esquerda da barra de rolagem. scrollbar_sliceSe "oeste", este atributo não tem efeito.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| scrollbar_right_pad        | O espaço à direita da barra de rolagem. scrollbar_sliceSe "leste", este atributo não tem efeito.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| scrollbar_top_pad          | O espaço acima da barra de rolagem.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| scrollbar_bottom_pad       | O espaço na parte inferior da barra de rolagem.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| visible                    | Defina como "falso" para ocultar o menu de inicialização.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+
+
+`canvas`
+canvas É um container que pode colocar qualquer componente dentro dele sem alterar a posição de seus subcomponentes.
+
+`hbox`
+hboxO contêiner dispõe seus filhos da esquerda para a direita, definindo a largura preferida de cada filho. A altura de cada componente filho será definida para a altura preferida mais alta entre os componentes filho.
+
+
+`vbox`
+vbox O contêiner dispõe seus filhos de cima para baixo, definindo cada filho em sua altura preferida. A largura de cada componente filho será definida como a largura preferida mais larga entre os componentes filho.
+
+
+`animation`
+Mostrar animação. As variáveis ​​precisam ser definidas corretamente grub_frame_speedpara ativar a animação.
+
+```grub
+export grub_frame_speed=110
+```
+
+Entre eles, 110 é a taxa de quadros e a unidade é milissegundos por quadro.
+
+```grub
++ animation {
+    dir_name = "IMAGE_DIR"
+    image_format = png/jpg/jpeg/tga
+    frame_number = n
+    left = p%
+    width = p%
+    top = p%
+    height = p%
+    size_ratio = n
+    start_x = n
+    start_y = n
+    move_speed = n
+    move_direction = up/down/left/right
+    play_once = pause/disappear
+    hit_wall = pause/stop/disappear
+    bind_menu = fixed_position/follow_single/foll_variety/full_screen
+    bind_direction = left/right
+}
+```
+
+| Atributo                                                                                                                                                         | Descrição:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dirname=“IMAGE_DIR”                                                                                                                                              | A pasta onde está localizada a imagem da sequência de animação refere-se à pasta sob o diretório onde o theme.txt está localizado                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| image_format=png/jpg/jpeg/tga                                                                                                                                    | Especifica a extensão da imagem de animação, suporta png, jpg, jpeg, tga                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| frame_number=n                                                                                                                                                   | O número total de imagens de sequência de animação. O nome do arquivo de imagem deve ser um número mais uma extensão, e o número começa em 1, como 1.jpg, 2.jpg, 3.jpg …                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| size_ratio=n                                                                                                                                                     | A escala do tamanho da animação em relação ao contêiner.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| start_x/start_y=n                                                                                                                                                | O valor de deslocamento das coordenadas x/y da animação no contêiner. start_y não tem efeito se a animação seguir a posição do item de seleção do menu principal.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| move_direction=up/down/left/right                                                                                                                                | Defina a direção de movimento inicial da animação, que só é válida em animações de movimento aleatório.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| move_speed=n                                                                                                                                                     | Define a velocidade de movimento da animação. Um valor de 0 reproduz a animação no local. O valor não pode ser negativo.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| play_once=pause/disappear                                                                                                                                        | Pause para mostrar o último quadro ou desapareça depois de definir a animação para ser reproduzida uma vez. Se este item não for definido, ele será reproduzido em loop.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| hit_wall=pause/stop/disappear                                                                                                                                    | Defina o comportamento quando a animação atingir a parede do contêiner, pausar - pausar a animação, parar - parar de se mover, continuar a reproduzir a animação, desaparecer - desaparecer.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| bind_menu=fixed_position/follow_single/foll_variety/full_screen  fixed_position –  follow_single –  follow_variety –  full_screen –  bind_direction = left/right | Anime o uso do logotipo à medida que ele muda com as opções do menu. Se o parâmetro não for follow_single, a sequência de animação deve ser colocada em cada subdiretório do diretório de parâmetro dir_name e o nome do subdiretório é o mesmo que o parâmetro de menuentry –class.  *fixed_position* – reproduz a animação com o item de menu na posição fixa; *follow_single* – segue o item do menu, mostrando o mesmo conjunto de animações em diferentes posições ; *follow_variety* – segue o item do menu, reproduz diferentes animações em diferentes posições; *full_screen* – Animações em tela cheia que mudam com os itens do menu ; *bind_direction* = esquerda/direita Depois de habilitar a animação seguindo os itens do menu, defina a posição da animação à esquerda ou à direita da borda esquerda do menu principal |
+
+### Propriedades Gerais
+
+| Propriedade | Descrição:                                            |
+|-------------|-------------------------------------------------------|
+| left        | Especifica a posição da borda esquerda do componente. |
+| top         | Especifica a posição da borda superior do componente. |
+| width       | Especifica a largura do componente.                   |
+| height      | Especifica a altura do componente.                    |
+
