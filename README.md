@@ -15,4 +15,4 @@ See the file INSTALL for instructions on how to build and install the GRUB 2 dat
 Download: https://github.com/a1ive/grub/releases
 若下载速度慢，建议使用 [gitd.cc](http://gitd.cc/) 下载
 
-Manual: [简体中文](https://a1ive.github.io/grub2_zh.html)
+Manual em português: [Documentação](https://github.com/miguel7penteado/grub2/blob/main/documenta%C3%A7%C3%A3o/)
