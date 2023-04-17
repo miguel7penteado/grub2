@@ -1,4 +1,4 @@
-# THIS PROJECT IS NO LONGER BEING MAINTAINED 
+GRUB versão 2
 
 * * *
 
@@ -6,13 +6,13 @@
 
 ![](https://img.shields.io/github/license/a1ive/grub) ![](https://img.shields.io/travis/a1ive/grub) ![](https://img.shields.io/github/release-date/a1ive/grub) ![](https://img.shields.io/github/downloads/a1ive/grub/total)
 
-Fork of GRUB 2 to add various features.
+Fork do GRUB 2 para adicionar várias funcionalidades.
 
-See the file INSTALL for instructions on how to build and install the GRUB 2 data and program files.
+Veja o arquivo INSTALL para as instruções de como compilar, construir e instalar o GRUB 2, dados e arquivos do programa.
 
 ~~Extra modules: https://github.com/a1ive/grub-extras~~
 
 Download: https://github.com/a1ive/grub/releases
-若下载速度慢，建议使用 [gitd.cc](http://gitd.cc/) 下载
+
 
 Manual em português: [Documentação](https://github.com/miguel7penteado/grub2/blob/main/documenta%C3%A7%C3%A3o/)
