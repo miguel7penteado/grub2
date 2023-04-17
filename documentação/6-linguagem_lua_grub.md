@@ -73,3 +73,81 @@ lua /path/to/script.lua
 | integer ascii_code, integer scan_code = input.getkey_noblock( nil)  | Retorna o código ASCII e o scancode (usado no loop).                                            |
 | string line = input.read (nil)                                      | Aguarde até que o usuário digite uma linha de string.                                           |
 
+## Biblioteca VIDEO
+
+| Funções, parâmetros e retorno                                                                                              | Descrição:                                                      |
+|----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| video.swap_buffers(nil)                                                                                                    |                                                                 |
+| video.fill_rect(table color{integer r, integer g, integer b, integer a}, integer x, integer y, integer w, integer h)       | Desenha um retângulo no local especificado.                     |
+| video.draw_string(string text, string font, table color{integer r, integer g, integer b, integer a}, integer x, integer y) | Exibe uma string na posição especificada.                       |
+| string video_mode = video.info(nil)                                                                                        | Obtenha uma lista de modos de imagem.                           |
+| video.draw_pixel(table color{integer r, integer g, integer b, integer a}, integer x, integer y)                            | Desenhe um pixel na posição especificada.                       |
+| integer x, integer y = video.get_info(nil)                                                                                 | Obtenha a largura e a altura do modo de exibição atual.         |
+| userdata bitmap = video.bitmap_load(string filename)                                                                       | Carregue arquivos de imagem (suporte bmp, jpg, jpeg, png, tga). |
+| video.bitmap_close(userdata bitmap)                                                                                        | Feche o arquivo de imagem.                                      |
+| integer x, integer y = video.bitmap_info(userdata bitmap)                                                                  | Obtenha a largura e a altura da imagem.                         |
+| video.bitmap_blit(userdata bitmap, integer x, integer y, integer offset_x, integer offset_y, integer w, integer h)         | Exibe a imagem na posição especificada.                         |
+| userdata scaled_bitmap = video.bitmap_rescale(userdata bitmap, integer w, integer h)                                       | Dimensiona a imagem especificada.                               |
+
+
+
+## Biblioteca GBK
+
+| Funções, parâmetros e retorno                   | Descrição:                                                                           |
+|-------------------------------------------------|--------------------------------------------------------------------------------------|
+| string gbk_str = gbk.fromutf8(string utf8_str)  | Converter string UTF-8 em string codificada em GBK.                                  |
+| string utf8_str = gbk.toutf8(string gbk_str)    | Converta uma string codificada em GBK em uma string UTF-8.                           |
+| string utf8_simp = gbk.tosimp(string utf8_trad) | Converter string UTF-8 em chinês tradicional em string UTF-8 em chinês simplificado. |
+
+
+## Biblioteca DISK
+
+| Funções, parâmetros e retorno                                                         | Descrição:                                                                      |
+|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| userdata dev = disk.open (string diskname)                                            | Abra o disco, o valor de retorno é um identificador de disco do userdatatipo .  |
+| disk.close (userdata dev)                                                             | Feche o disco.                                                                  |
+| string buf = disk.read (userdata dev, integer sector, integer offset, integer length) | Leia os dados do setor/deslocamento especificado do disco e retorne uma string. |
+| disk.write (userdata dev, integer sector, integer offset, integer length, string buf) | gravar no disco.                                                                |
+| string partmap = disk.partmap (userdata dev)                                          | Obtenha o nome da tabela de partições.                                          |
+| string driver = disk.driver (userdata dev)                                            | Obtenha o nome da unidade de disco.                                             |
+| string fs = disk.fs (userdata dev)                                                    | Obtenha o nome do sistema de arquivos.                                          |
+| string uuid = disk.fsuuid (userdata dev)                                              | Obtenha o UUID do sistema de arquivos.                                          |
+| string label = disk.label (userdata dev)                                              | Obtenha o rótulo do disco.                                                      |
+| string size = disk.size (userdata dev[, flag])                                        | Obtenha o tamanho do disco.                                                     |
+| boolean boot = disk.bootable (userdata dev)                                           | Determine se a partição possui um sinalizador inicializável.                    |
+
+
+## Biblioteca FAT
+
+| Funções, parâmetros e retorno | Descrição: |
+|-------------------------------|------------|
+| fat.mount                     |            |
+| fat.umount                    |            |
+| fat.disk_status               |            |
+| fat.get_label                 |            |
+| fat.set_label                 |            |
+| fat.mkdir                     |            |
+| fat.rename                    |            |
+| fat.unlink                    |            |
+| fat.open                      |            |
+| fat.close                     |            |
+| fat.read                      |            |
+| fat.write                     |            |
+| fat.lseek                     |            |
+| fat.tell                      |            |
+| fat.eof                       |            |
+| fat.size                      |            |
+| fat.truncate                  |            |
+
+
+## Biblioteca MEMRW
+
+| Funções, parâmetros e retorno                  | Descrição:                                           |
+|------------------------------------------------|------------------------------------------------------|
+| integer value = memrw.read_byte(integer addr)  | Lê um byte de dados de um endereço de memória.       |
+| integer value = memrw.read_word(integer addr)  | Ler dados de byte duplo de um endereço de memória.   |
+| integer value = memrw.read_dword(integer addr) | Lê dados de palavra dupla do endereço de memória.    |
+| memrw.write_byte(integer addr, integer value)  | Escreva um byte de dados no endereço de memória.     |
+| memrw.write_word(integer addr, integer value)  | Grava dados de byte duplo no endereço de memória.    |
+| memrw.write_dword(integer addr, integer value) | Grava dados de palavra dupla no endereço de memória. |
+
